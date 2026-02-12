@@ -1,17 +1,17 @@
-//
-//  EXEmacRPCApp.swift
-//  EXEmacRPC
-//
-//  Created by Jfishin on 2/11/26.
-//
-
 import SwiftUI
 
 @main
 struct EXEmacRPCApp: App {
+    @State private var monitor = GameMonitor.shared
+
     var body: some Scene {
-        WindowGroup {
+        MenuBarExtra("EXEmacRPC", systemImage: "paperplane.fill") {
             ContentView()
         }
+
+        Window("Configuration", id: "config-window") {
+            ConfigView()
+        }
+        .windowResizability(.contentSize)
     }
 }
