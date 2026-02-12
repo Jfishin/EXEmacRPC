@@ -1,5 +1,9 @@
 # EXEmacRPC
 
+<p align="center">
+  <img src="pic.png" alt="Discord Rich Presence preview" width="300">
+</p>
+
 EXEmacRPC is a lightweight macOS menu bar application that automatically detects running games and updates your Discord Rich Presence status. It's particularly useful for games running through Wine, CrossOver, or other translation layers that might not natively support Discord integration on macOS.
 
 ## Features
@@ -16,7 +20,7 @@ EXEmacRPC is a lightweight macOS menu bar application that automatically detects
 
 1. Clone the repository:
    ```bash
-   git clone https://github.com/yourusername/EXEmacRPC.git
+   git clone https://github.com/Jfishin/EXEmacRPC.git
    ```
 2. Open `EXEmacRPC.xcodeproj` in Xcode.
 3. Build and run the project.
