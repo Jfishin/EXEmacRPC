@@ -32,12 +32,14 @@ enum ProcessScanner {
             let trimmed = line.trimmingCharacters(in: .whitespaces)
             guard trimmed.lowercased().contains(".exe") else { continue }
 
-            for token in trimmed.components(separatedBy: " ") {
-                let name = NameCleaner.clean(token, blacklist: blacklist, overrides: overrides)
-                if !name.isEmpty {
-                    print("[Scanner] Detected: \(name)")
-                    return name
-                }
+            // Extract the full path/name ending in .exe, including spaces
+            guard let range = trimmed.range(of: #"\S.*?\.exe"#, options: [.regularExpression, .caseInsensitive]) else { continue }
+            let exePath = String(trimmed[range])
+
+            let name = NameCleaner.clean(exePath, blacklist: blacklist, overrides: overrides)
+            if !name.isEmpty {
+                print("[Scanner] Detected: \(name)")
+                return name
             }
         }
 

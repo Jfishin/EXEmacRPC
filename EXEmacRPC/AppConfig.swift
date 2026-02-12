@@ -26,10 +26,10 @@ final class AppConfig {
         } else {
             self.blacklist = Set([
                 "ac4bfsp", "andale32", "bridge", "cmd", "conhost", "cxcplinfo",
-                "cxmanip", "dxsetup", "explorer", "gameoverlayui", "gldriverquery64",
+                "cxmanip", "dxsetup", "explorer", "gameoverlayui", "gameoverlaygui64", "gldriverquery64",
                 "ndp452-kb2901907-x86-x64-allos-enu",
                 "plugplay", "rpcss", "services", "start", "steam",
-                "steamerrorreporter", "steamerrorreporter64", "steamsysinfo",
+                "steamerrorreporter", "steamerrorreporter64", "steamservice", "steamsysinfo",
                 "steamwebhelper", "svchost", "unitycrashhandler64", "upc",
                 "ubisoftgamelauncher", "uplayservice", "uplaywebcore",
                 "vcredist_x64", "vcredist_x86", "vulkandriverquery",
