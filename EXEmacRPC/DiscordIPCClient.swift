@@ -3,7 +3,7 @@ import Foundation
 final class DiscordIPCClient: @unchecked Sendable {
     nonisolated static let shared = DiscordIPCClient()
 
-    private let clientID = Secrets.discordClientID
+    nonisolated(unsafe) private var clientID = AppConfig.shared.activeDiscordClientID
     nonisolated(unsafe) private var socketFD: Int32 = -1
     nonisolated(unsafe) private var _isConnected = false
     private let lock = NSLock()
@@ -67,6 +67,15 @@ final class DiscordIPCClient: @unchecked Sendable {
 
         Darwin.close(fd)
         print("[Discord] Disconnected")
+    }
+
+    nonisolated func reconnectWithNewClientID(newClientID: String) {
+        disconnect()
+        lock.lock()
+        clientID = newClientID
+        lock.unlock()
+        print("[Discord] Switching to client ID: \(clientID)")
+        connect()
     }
 
     // MARK: - Socket

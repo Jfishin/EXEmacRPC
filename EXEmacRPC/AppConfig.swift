@@ -6,6 +6,22 @@ final class AppConfig {
 
     var blacklist: Set<String>
     var overrides: [String: String]
+    var platform: String  // "crossover", "portingkit", or "sikarugir"
+    var customPlatformEnabled: Bool
+    var customDiscordClientID: String
+    var customPublicKey: String
+
+    var activeDiscordClientID: String {
+        if customPlatformEnabled, !customDiscordClientID.isEmpty {
+            return customDiscordClientID
+        }
+        switch platform {
+        case "portingkit": return Secrets.portingKitDiscordClientID
+        case "sikarugir": return Secrets.sikarugirDiscordClientID
+        case "wine": return Secrets.wineDiscordClientID
+        default: return Secrets.discordClientID
+        }
+    }
 
     private let configURL: URL
 
@@ -23,6 +39,10 @@ final class AppConfig {
                 stored.overrides.map { ($0.key.lowercased(), $0.value) },
                 uniquingKeysWith: { _, last in last }
             )
+            self.platform = stored.platform ?? "crossover"
+            self.customPlatformEnabled = stored.customPlatformEnabled ?? false
+            self.customDiscordClientID = stored.customDiscordClientID ?? ""
+            self.customPublicKey = stored.customPublicKey ?? ""
         } else {
             self.blacklist = Set([
                 "ac4bfsp", "andale32", "bridge", "cmd", "conhost", "cxcplinfo",
@@ -34,7 +54,7 @@ final class AppConfig {
                 "ubisoftgamelauncher", "uplayservice", "uplaywebcore",
                 "vcredist_x64", "vcredist_x86", "vulkandriverquery",
                 "vulkandriverquery64", "wine", "wineboot", "winecfg",
-                "winedbg", "winedevice", "winewrapper",
+                "winedbg", "winedevice", "winemenubuilder", "winewrapper",
                 "crashpad_handler"
             ])
             self.overrides = [
@@ -45,6 +65,10 @@ final class AppConfig {
                 "kz": "The First Berserker Khazan",
                 "etg": "Enter the Gungeon"
             ]
+            self.platform = "crossover"
+            self.customPlatformEnabled = false
+            self.customDiscordClientID = ""
+            self.customPublicKey = ""
             save()
         }
     }
@@ -52,7 +76,11 @@ final class AppConfig {
     func save() {
         let stored = StoredConfig(
             blacklist: Array(blacklist).sorted(),
-            overrides: overrides
+            overrides: overrides,
+            platform: platform,
+            customPlatformEnabled: customPlatformEnabled,
+            customDiscordClientID: customDiscordClientID,
+            customPublicKey: customPublicKey
         )
         if let data = try? JSONEncoder().encode(stored) {
             try? data.write(to: configURL, options: .atomic)
@@ -63,4 +91,8 @@ final class AppConfig {
 private struct StoredConfig: Codable {
     let blacklist: [String]
     let overrides: [String: String]
+    let platform: String?
+    let customPlatformEnabled: Bool?
+    let customDiscordClientID: String?
+    let customPublicKey: String?
 }
