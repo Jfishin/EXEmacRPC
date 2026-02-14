@@ -4,7 +4,7 @@
   <img src="pic.png" alt="Discord Rich Presence preview" width="300">
 </p>
 
-EXEmacRPC is a lightweight macOS menu bar application that automatically detects running games and updates your Discord Rich Presence status. It's particularly useful for games running through Wine, CrossOver, or other translation layers that might not natively support Discord integration on macOS.
+EXEmacRPC is a lightweight macOS menu bar application that automatically detects running games and updates your Discord Rich Presence status. It's particularly useful for games running through CrossOver, Portingkit, Sikarugir, WINE or other translation layers that might not natively support Discord integration on macOS.
 
 ## Features
 
